@@ -29,7 +29,6 @@ export function operaciones(caso, iI, vf, va, ii, nn, tipo) {
         iI = parseFloat(iI).toFixed(numDeci);
         return vf;
       case 5:
-        console.log("caso" + 5);
         x = 1 + ii * nn;
         y = ii * nn;
         vf = (iI * x) / y;
@@ -92,7 +91,6 @@ export function operaciones(caso, iI, vf, va, ii, nn, tipo) {
         return iI;
       case 17:
         x = (1 + ii) ** nn;
-        console.log(x);
         iI = va * (x - 1);
         iI = parseFloat(iI).toFixed(numDeci);
         return iI;
@@ -107,7 +105,6 @@ export function operaciones(caso, iI, vf, va, ii, nn, tipo) {
         iI = parseFloat(iI).toFixed(numDeci);
         return vf;
       case 20:
-        console.log("caso" + 20);
         x = (1 + ii) ** nn;
         y = x - 1;
         vf = iI * (1 + 1 / y);

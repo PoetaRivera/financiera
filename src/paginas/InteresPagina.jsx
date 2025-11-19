@@ -18,6 +18,7 @@ import { determinaCaso } from "../funciones/determinaCaso.js";
 import { ejecutaCaso } from "../funciones/ejecutaCaso.js";
 import { operaciones } from "../funciones/operacionesInteres.js";
 import { alertaMensaje } from "../funciones/alertaMensaje.js";
+import { esNumeroValido, esNumeroPositivo, sanitizarNumero } from "../funciones/validarInput.js";
 //============================================================================================
 //componente
 export default function Interes({ tipo }) {
@@ -200,86 +201,115 @@ export default function Interes({ tipo }) {
   }
 
   function verificaEntradas() {
+    const etiquetaI = tipo === 0 ? 'I' : 'R';
+
     switch (caso) {
       case 1:
       case 16:
-        validarDatos([vf, va]);
+        validarDatos([vf, va], ['Vf', 'Va']);
         break;
 
       case 4:
       case 19:
-        console.log(va);
-        console.log(iI);
-        validarDatos([va, iI]);
+        validarDatos([va, iI], ['Va', etiquetaI]);
         break;
 
       case 7:
       case 22:
-        validarDatos([vf, iI]);
+        validarDatos([vf, iI], ['Vf', etiquetaI]);
         break;
 
       case 2:
       case 17:
       case 6:
       case 21:
-        validarDatos([va, ii, nn]);
+        validarDatos([va, ii, nn], ['Va', 'i', 'n']);
         break;
 
       case 3:
       case 18:
       case 9:
       case 24:
-        validarDatos([vf, ii, nn]);
+        validarDatos([vf, ii, nn], ['Vf', 'i', 'n']);
         break;
 
       case 5:
       case 20:
       case 8:
       case 23:
-        validarDatos([iI, ii, nn]);
+        validarDatos([iI, ii, nn], [etiquetaI, 'i', 'n']);
         break;
 
       case 10:
       case 25:
-        validarDatos([vf, va, nn]);
+        validarDatos([vf, va, nn], ['Vf', 'Va', 'n']);
         break;
 
       case 11:
       case 26:
-        validarDatos([iI, vf, nn]);
+        validarDatos([iI, vf, nn], [etiquetaI, 'Vf', 'n']);
         break;
 
       case 12:
       case 27:
-        validarDatos([iI, va, nn]);
+        validarDatos([iI, va, nn], [etiquetaI, 'Va', 'n']);
         break;
 
       case 13:
       case 28:
-        validarDatos([vf, va, ii]);
+        validarDatos([vf, va, ii], ['Vf', 'Va', 'i']);
         break;
 
       case 14:
       case 29:
-        validarDatos([iI, vf, ii]);
+        validarDatos([iI, vf, ii], [etiquetaI, 'Vf', 'i']);
         break;
 
       case 15:
       case 30:
-        validarDatos([iI, va, ii]);
+        validarDatos([iI, va, ii], [etiquetaI, 'Va', 'i']);
         break;
 
       default:
         break;
     }
-    function validarDatos(datos) {
-      if (
-        datos.some((dato) => dato === undefined || dato === 0 || dato === "")
-      ) {
+    function validarDatos(datos, nombres = []) {
+      // Verificar si hay datos vacíos
+      if (datos.some((dato) => dato === undefined || dato === "")) {
         alertaMensaje("Ingrese todos los datos conocidos");
-      } else {
-        presentaResultado(tipo);
+        return;
       }
+
+      // Validar que todos sean números válidos
+      for (let i = 0; i < datos.length; i++) {
+        if (!esNumeroValido(datos[i])) {
+          const nombreCampo = nombres[i] || `Campo ${i + 1}`;
+          alertaMensaje(`"${nombreCampo}" debe ser un número válido`);
+          return;
+        }
+      }
+
+      // Validar que sean números positivos (permitiendo cero en algunos casos)
+      for (let i = 0; i < datos.length; i++) {
+        const valor = Number(datos[i]);
+
+        // Verificar valores negativos
+        if (valor < 0) {
+          const nombreCampo = nombres[i] || `Campo ${i + 1}`;
+          alertaMensaje(`"${nombreCampo}" no puede ser negativo`);
+          return;
+        }
+
+        // Verificar cero (en valores financieros, típicamente no se permite cero)
+        if (valor === 0) {
+          const nombreCampo = nombres[i] || `Campo ${i + 1}`;
+          alertaMensaje(`"${nombreCampo}" debe ser mayor que cero`);
+          return;
+        }
+      }
+
+      // Si todas las validaciones pasan, presentar resultado
+      presentaResultado(tipo);
     }
   }
 
