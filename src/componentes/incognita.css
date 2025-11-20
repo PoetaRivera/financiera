@@ -21,9 +21,10 @@
     justify-content: center;
     align-items: center;
     height: 30px;
+    accent-color: var(--A400);
 }
 
-.incognita-input input{
+.incognita-input input {
     width: 20px;
     height: 20px;
 }

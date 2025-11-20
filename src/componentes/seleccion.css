@@ -1,6 +1,6 @@
 .seleccion {
     font-size: clamp(1rem, 2vw, 1.2rem);
-    margin: var(--spacing-lg) auto;
+    margin: 5rem auto var(--spacing-lg) auto;
     width: 100%;
     max-width: 600px;
     display: flex;
@@ -24,8 +24,6 @@
 /* Responsive para móviles */
 @media (max-width: 480px) {
     .seleccion {
-        margin: var(--spacing-md) 0;
+        margin: 3rem 0 var(--spacing-md) 0;
     }
 }
-
-

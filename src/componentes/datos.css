@@ -22,6 +22,7 @@
     align-items: center;
     height: 30px;
     gap: 1.5rem;
+    accent-color: var(--A400);
 }
 
 /*aumenta el tamaño de los check radio 1.25*/
