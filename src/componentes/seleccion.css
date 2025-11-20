@@ -1,8 +1,10 @@
 .seleccion {
     font-size: clamp(1rem, 2vw, 1.2rem);
-    margin: var(--spacing-lg) 0;
+    margin: var(--spacing-lg) auto;
     width: 100%;
     max-width: 600px;
+    display: flex;
+    justify-content: center;
 }
 
 .seleccion button {
