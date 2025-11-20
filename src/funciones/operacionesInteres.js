@@ -1,4 +1,42 @@
 import { log } from "mathjs";
+
+/**
+ * Formatea un número a string con decimales fijos
+ * @param {number} valor - El valor numérico a formatear
+ * @param {number} decimales - Número de decimales (default: 6)
+ * @returns {string} - El número formateado
+ */
+function formatear(valor, decimales = 6) {
+  return parseFloat(valor).toFixed(decimales);
+}
+
+/**
+ * Calcula el interés: I = Vf - Va
+ * Casos 1 y 16 (Simple y Compuesto idénticos)
+ */
+function calcularInteres_VfMenosVa(vf, va) {
+  const iI = vf - va;
+  return formatear(iI);
+}
+
+/**
+ * Calcula el valor futuro: Vf = Va + I
+ * Casos 4 y 19 (Simple y Compuesto idénticos)
+ */
+function calcularVf_VaMasI(va, iI) {
+  const vf = va + iI;
+  return vf; // Nota: retorna el número, no formateado
+}
+
+/**
+ * Calcula el valor actual: Va = Vf - I
+ * Casos 7 y 22 (Simple y Compuesto idénticos)
+ */
+function calcularVa_VfMenosI(vf, iI) {
+  const va = vf - iI;
+  return formatear(va);
+}
+
 export function operaciones(caso, iI, vf, va, ii, nn, tipo) {
   const numDeci = 6;
   let x, y, z, u, w;
@@ -11,9 +49,7 @@ export function operaciones(caso, iI, vf, va, ii, nn, tipo) {
     nn = +nn;
     switch (caso) {
       case 1:
-        iI = vf - va;
-        iI = parseFloat(iI).toFixed(numDeci);
-        return iI;
+        return calcularInteres_VfMenosVa(vf, va);
       case 2:
         iI = va * ii * nn;
         iI = parseFloat(iI).toFixed(numDeci);
@@ -25,9 +61,7 @@ export function operaciones(caso, iI, vf, va, ii, nn, tipo) {
         iI = parseFloat(iI).toFixed(numDeci);
         return iI;
       case 4:
-        vf = va + iI;
-        iI = parseFloat(iI).toFixed(numDeci);
-        return vf;
+        return calcularVf_VaMasI(va, iI);
       case 5:
         x = 1 + ii * nn;
         y = ii * nn;
@@ -40,9 +74,7 @@ export function operaciones(caso, iI, vf, va, ii, nn, tipo) {
         vf = parseFloat(vf).toFixed(numDeci);
         return vf;
       case 7:
-        va = vf - iI;
-        va = parseFloat(va).toFixed(numDeci);
-        return va;
+        return calcularVa_VfMenosI(vf, iI);
       case 8:
         va = iI / (ii * nn);
         va = parseFloat(va).toFixed(numDeci);
@@ -86,9 +118,7 @@ export function operaciones(caso, iI, vf, va, ii, nn, tipo) {
         nn = parseFloat(nn).toFixed(numDeci);
         return nn;
       case 16:
-        iI = vf - va;
-        iI = parseFloat(iI).toFixed(numDeci);
-        return iI;
+        return calcularInteres_VfMenosVa(vf, va);
       case 17:
         x = (1 + ii) ** nn;
         iI = va * (x - 1);
@@ -101,9 +131,7 @@ export function operaciones(caso, iI, vf, va, ii, nn, tipo) {
         iI = parseFloat(iI).toFixed(numDeci);
         return iI;
       case 19:
-        vf = va + iI;
-        iI = parseFloat(iI).toFixed(numDeci);
-        return vf;
+        return calcularVf_VaMasI(va, iI);
       case 20:
         x = (1 + ii) ** nn;
         y = x - 1;
@@ -116,9 +144,7 @@ export function operaciones(caso, iI, vf, va, ii, nn, tipo) {
         vf = parseFloat(vf).toFixed(numDeci);
         return vf;
       case 22:
-        va = vf - iI;
-        va = parseFloat(va).toFixed(numDeci);
-        return va;
+        return calcularVa_VfMenosI(vf, iI);
       case 23:
         x = (1 + ii) ** nn;
         va = iI / (x - 1);
