@@ -1,17 +1,27 @@
 .datos {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: var(--spacing-md);
     justify-content: flex-start;
     align-items: center;
-    margin: 0px 0px;
-    width: 100vh;
+    margin: 0;
+    width: 100%;
+    max-width: 600px;
+    padding: var(--spacing-lg);
+    background: linear-gradient(135deg, rgba(26, 26, 26, 0.6) 0%, rgba(15, 15, 15, 0.6) 100%);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(118, 255, 3, 0.1);
 }
 
 .datos-subtitulo {
-    height: 10px;
     font-style: oblique;
-    font-size: x-large;
+    font-size: clamp(1.2rem, 3vw, 1.5rem);
+    font-weight: 500;
+    color: var(--primary-light);
+    margin: 0;
 }
 
 .datos-input {
@@ -19,17 +29,72 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    height: 30px;
-    gap: 1.5rem;
+    flex-wrap: wrap;
+    min-height: 30px;
+    gap: var(--spacing-lg);
 }
 
-/*aumenta el tamaño de los check radio 1.25*/
+/* Aumenta el tamaño de los check radio */
 .datos-input input {
     width: 20px;
     height: 20px;
+    cursor: pointer;
+    transition: transform var(--transition-fast);
+}
+
+.datos-input input:hover {
+    transform: scale(1.1);
+}
+
+.datos-input input:checked {
+    transform: scale(1.2);
 }
 
 .datos-input label {
-    margin-left: 2px;
-    margin-right: 2rem;
+    margin-left: var(--spacing-xs);
+    margin-right: var(--spacing-lg);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: color var(--transition-base);
+}
+
+.datos-input label:hover {
+    color: var(--primary-light);
+}
+
+/* Responsive para tablets */
+@media (max-width: 768px) {
+    .datos {
+        padding: var(--spacing-md);
+    }
+
+    .datos-input {
+        gap: var(--spacing-md);
+    }
+
+    .datos-input label {
+        margin-right: var(--spacing-md);
+    }
+}
+
+/* Responsive para móviles */
+@media (max-width: 480px) {
+    .datos {
+        padding: var(--spacing-md);
+        gap: var(--spacing-sm);
+    }
+
+    .datos-subtitulo {
+        font-size: 1.1rem;
+    }
+
+    .datos-input {
+        flex-direction: column;
+        gap: var(--spacing-xs);
+        align-items: flex-start;
+    }
+
+    .datos-input label {
+        margin-right: 0;
+    }
 }

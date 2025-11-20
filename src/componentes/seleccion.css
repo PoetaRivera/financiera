@@ -1,6 +1,29 @@
-.seleccion{
-font-size: large;
-margin: 20px;
+.seleccion {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    margin: var(--spacing-lg) 0;
+    width: 100%;
+    max-width: 600px;
+}
+
+.seleccion button {
+    background: linear-gradient(135deg, rgba(118, 255, 3, 0.2) 0%, rgba(100, 221, 23, 0.2) 100%);
+    border: 2px solid var(--primary);
+    color: var(--primary-light);
+    font-weight: 600;
+    transition: all var(--transition-base);
+}
+
+.seleccion button:hover {
+    background: linear-gradient(135deg, rgba(118, 255, 3, 0.3) 0%, rgba(100, 221, 23, 0.3) 100%);
+    color: var(--primary);
+    border-color: var(--primary-light);
+}
+
+/* Responsive para móviles */
+@media (max-width: 480px) {
+    .seleccion {
+        margin: var(--spacing-md) 0;
+    }
 }
 
 

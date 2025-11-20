@@ -2,7 +2,96 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-    gap: 30px;
-    font-size:large;
+    align-items: center;
+    gap: var(--spacing-xl);
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    width: 100%;
+    max-width: 600px;
+    padding: var(--spacing-lg);
+    flex-wrap: wrap;
+}
+
+.calcular button {
+    min-width: 140px;
+    padding: 0.9em 2em;
+    font-size: 1.1rem;
+    font-weight: 600;
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+    color: #1a1a1a;
+    border: none;
+    border-radius: var(--radius-full);
+    box-shadow: var(--shadow-lg), var(--shadow-glow);
+    transition: all var(--transition-base);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.calcular button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.calcular button:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.calcular button:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: var(--shadow-xl), 0 0 40px rgba(118, 255, 3, 0.5);
+}
+
+.calcular button:active {
+    transform: translateY(-1px) scale(1.02);
+    box-shadow: var(--shadow-md), var(--shadow-glow);
+}
+
+.calcular button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.calcular button:disabled:hover {
+    transform: none;
+    box-shadow: var(--shadow-sm);
+}
+
+/* Responsive para tablets */
+@media (max-width: 768px) {
+    .calcular {
+        gap: var(--spacing-lg);
+        padding: var(--spacing-md);
+    }
+
+    .calcular button {
+        min-width: 120px;
+        padding: 0.8em 1.6em;
+        font-size: 1rem;
+    }
+}
+
+/* Responsive para móviles */
+@media (max-width: 480px) {
+    .calcular {
+        flex-direction: column;
+        gap: var(--spacing-md);
+        padding: var(--spacing-sm);
+    }
+
+    .calcular button {
+        width: 100%;
+        min-width: auto;
+        padding: 0.9em 1.5em;
+    }
 }
 
