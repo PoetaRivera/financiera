@@ -85,11 +85,13 @@
     .calcular {
         flex-direction: column;
         gap: var(--spacing-md);
-        padding: var(--spacing-sm);
+        padding: var(--spacing-md);
+        align-items: center;
     }
 
     .calcular button {
         width: 100%;
+        max-width: 280px;
         min-width: auto;
         padding: 0.9em 1.5em;
     }
