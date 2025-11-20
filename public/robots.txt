@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://tudominio.com/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 0
+
+# Disallow admin areas (if you add them in the future)
+# Disallow: /admin/
+# Disallow: /api/

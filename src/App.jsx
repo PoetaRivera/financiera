@@ -4,6 +4,7 @@ import Tasas from "./paginas/TasasPagina";
 import Descuento from "./paginas/DescuentoPagina";
 import Inicio from "./paginas/InicioPagina";
 import Error404 from "./paginas/Error404";
+import SEOContent from './componentes/SEOContent';
 import './App.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import BarraNavegacion from './componentes/BarraNavegacion';
@@ -14,6 +15,9 @@ function App() {
   
   return (
     <BrowserRouter className='Browser'>
+      {/* Contenido SEO para motores de búsqueda */}
+      <SEOContent />
+
       <BarraNavegacion tipo={tipo} setTipo={setTipo}></BarraNavegacion>
       <Routes className='routes'>
         <Route path="/" element={<Inicio />} />
