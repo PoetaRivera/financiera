@@ -9,10 +9,10 @@
     min-height: 60px;
 
     /* Glassmorphism effect */
-    background: rgba(26, 26, 26, 0.8);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(118, 255, 3, 0.1);
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(118, 255, 3, 0.2);
     box-shadow: var(--shadow-md);
 
     position: sticky;
@@ -26,7 +26,7 @@
     padding: 0.7em 1.4em;
     font-size: 1em;
     font-weight: 500;
-    background: linear-gradient(135deg, rgba(26, 26, 26, 0.9) 0%, rgba(15, 15, 15, 0.9) 100%);
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.9) 100%);
     color: aliceblue;
     cursor: pointer;
     transition: all var(--transition-base);
