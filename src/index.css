@@ -10,14 +10,17 @@
   --A400R: rgb(118, 255, 3);
   --A700R: rgb(100, 221, 23);
 
-  /* Variables modernas adicionales */
-  --primary: #76FF03;
-  --primary-dark: #64DD17;
-  --primary-light: #B2FF59;
-  --bg-dark: #1a1a1a;
-  --bg-darker: #0f0f0f;
-  --text-primary: rgba(255, 255, 255, 0.87);
-  --text-secondary: rgba(255, 255, 255, 0.6);
+  /* Paleta moderna elegante - Cyan/Teal premium */
+  --primary: #06b6d4;
+  --primary-dark: #0891b2;
+  --primary-light: #22d3ee;
+  --accent: #14b8a6;
+  --accent-light: #5eead4;
+
+  --bg-dark: #0f172a;
+  --bg-darker: #020617;
+  --text-primary: rgba(255, 255, 255, 0.95);
+  --text-secondary: rgba(148, 163, 184, 0.9);
 
   /* Sombras modernas */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
@@ -88,7 +91,7 @@ body {
   min-width: 320px;
   min-height: 100vh;
   overflow-x: hidden;
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+  background: linear-gradient(135deg, #020617 0%, #0f172a 40%, #1e293b 100%);
   background-attachment: fixed;
 }
 
