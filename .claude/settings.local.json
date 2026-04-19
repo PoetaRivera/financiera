@@ -22,7 +22,9 @@
       "WebFetch(domain:www.eaeprogramas.es)",
       "WebFetch(domain:belver.clavijero.edu.mx)",
       "Bash(npx vitest *)",
-      "Bash(npx vite *)"
+      "Bash(npx vite *)",
+      "Bash(claude mcp *)",
+      "Bash(gh run *)"
     ]
   }
 }

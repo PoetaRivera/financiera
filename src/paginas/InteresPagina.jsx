@@ -274,10 +274,12 @@ export default function Interes({ tipo }) {
         break;
     }
     function validarDatos(datos, nombres = []) {
-      // Verificar si hay datos vacíos
-      if (datos.some((dato) => dato === undefined || dato === "")) {
-        alertaMensaje("Ingrese todos los datos conocidos");
-        return;
+      for (let i = 0; i < datos.length; i++) {
+        if (datos[i] === undefined || datos[i] === "") {
+          const nombreCampo = nombres[i] || `Campo ${i + 1}`;
+          alertaMensaje(`Ingrese el valor de "${nombreCampo}"`);
+          return;
+        }
       }
 
       // Validar que todos sean números válidos
@@ -363,13 +365,17 @@ export default function Interes({ tipo }) {
       alertaMensaje("Los valores ingresados no tienen solución matemática válida");
       return;
     }
+    const esResultadoTasa = numMesaje === 3;
+    const resFormateado = esResultadoTasa
+      ? `${res}  (${(parseFloat(res) * 100).toFixed(4)}%)`
+      : res;
     texto[3] = mensajesR[numMesaje];
     const textoNuevo = [...texto];
     setTexto(textoNuevo);
     mostrar[3] = true;
     const mostrarNuevo = [...mostrar];
     setMostrar(mostrarNuevo);
-    setResultado(res);
+    setResultado(resFormateado);
   }
 
   function limpiar() {

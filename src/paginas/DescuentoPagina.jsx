@@ -24,6 +24,24 @@ function labelResultado(caso) {
   return RESULTADO_LABEL[4];
 }
 
+const LABELS_VALIDACION = {
+  1:  ['Vf', 'Va'],
+  2:  ['Va', 'd', 'n'],
+  3:  ['Vf', 'd', 'n'],
+  4:  ['Va', 'D'],
+  5:  ['D',  'd', 'n'],
+  6:  ['Va', 'd', 'n'],
+  7:  ['Vf', 'D'],
+  8:  ['D',  'd', 'n'],
+  9:  ['Vf', 'd', 'n'],
+  10: ['Vf', 'Va', 'n'],
+  11: ['Vf', 'D',  'n'],
+  12: ['Va', 'D',  'n'],
+  13: ['Vf', 'Va', 'd'],
+  14: ['Vf', 'D',  'd'],
+  15: ['D',  'Va', 'd'],
+};
+
 // Mapa declarativo: caso → { d1: setter, d2: setter, d3?: setter }
 // Se construye dentro del componente para acceder a los setters de estado
 function buildCamposPorCaso(setVf, setVa, setDD, setDd, setNn) {
@@ -102,20 +120,23 @@ export default function Descuento() {
   }
 
   function verificaEntradas() {
-    const vals = GRUPOS_VALIDACION[caso]?.({ dD, vf, va, dd, nn });
+    const vals   = GRUPOS_VALIDACION[caso]?.({ dD, vf, va, dd, nn });
+    const labels = LABELS_VALIDACION[caso] || [];
     if (!vals) return;
 
-    for (const v of vals) {
+    for (let idx = 0; idx < vals.length; idx++) {
+      const v     = vals[idx];
+      const label = labels[idx] || `Campo ${idx + 1}`;
       if (v === undefined || v === "" || v === 0) {
-        alertaMensaje("Ingrese todos los datos conocidos");
+        alertaMensaje(`Ingrese el valor de "${label}"`);
         return;
       }
       if (!esNumeroValido(v)) {
-        alertaMensaje("Ingrese un número válido");
+        alertaMensaje(`"${label}" debe ser un número válido`);
         return;
       }
       if (Number(v) <= 0) {
-        alertaMensaje("Los valores deben ser mayores que cero");
+        alertaMensaje(`"${label}" debe ser mayor que cero`);
         return;
       }
     }
@@ -125,11 +146,15 @@ export default function Descuento() {
       alertaMensaje("d × n debe ser menor que 1 para este cálculo");
       return;
     }
+    const esResultadoTasa = caso >= 10 && caso <= 12;
+    const resFormateado = esResultadoTasa
+      ? `${res}  (${(parseFloat(res) * 100).toFixed(4)}%)`
+      : res;
     texto[3] = labelResultado(caso);
     setTexto([...texto]);
     mostrar[3] = true;
     setMostrar([...mostrar]);
-    setResultado(res);
+    setResultado(resFormateado);
   }
 
   function limpiar() {

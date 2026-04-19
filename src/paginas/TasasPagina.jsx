@@ -40,19 +40,21 @@ export default function Tasas() {
 
   function calcular() {
     const cfg = CONFIG[tipoCalc];
-    const vals = cfg.campos === 3 ? [e1, e2, e3] : [e1, e2];
+    const campos = cfg.campos === 3
+      ? [[e1, cfg.labels[0]], [e2, cfg.labels[1]], [e3, cfg.labels[2]]]
+      : [[e1, cfg.labels[0]], [e2, cfg.labels[1]]];
 
-    for (const v of vals) {
+    for (const [v, label] of campos) {
       if (v === "" || v === undefined) {
-        alertaMensaje("Ingrese todos los datos");
+        alertaMensaje(`Ingrese el valor de "${label}"`);
         return;
       }
       if (!esNumeroValido(v)) {
-        alertaMensaje("Ingrese un número válido");
+        alertaMensaje(`"${label}" debe ser un número válido`);
         return;
       }
       if (Number(v) <= 0) {
-        alertaMensaje("Los valores deben ser mayores que cero");
+        alertaMensaje(`"${label}" debe ser mayor que cero`);
         return;
       }
     }
@@ -62,7 +64,8 @@ export default function Tasas() {
       alertaMensaje("n × d debe ser menor que 1 para calcular ir");
       return;
     }
-    setResultado(`${cfg.resultado} ${res}`);
+    const pct = (parseFloat(res) * 100).toFixed(4);
+    setResultado(`${cfg.resultado} ${res}  (${pct}%)`);
   }
 
   function limpiar() {
@@ -105,7 +108,9 @@ export default function Tasas() {
             <span>d: tasa de descuento comercial</span>
             <span>ir: tasa de interés real</span>
             <span>m: número de capitalizaciones por año</span>
-            <span>n: número de períodos (años)</span>
+            <span>n: número de sub-períodos a convertir</span>
+            <span className="miTitulo">Nota sobre n:</span>
+            <span>Para calcular i y j, n indica cuántos sub-períodos deseas convertir. Si n = m obtienes la tasa efectiva anual estándar del libro. Usar n ≠ m permite convertir a cualquier período (bimestral, trimestral, etc.).</span>
           </section>
         </div>
       )}
