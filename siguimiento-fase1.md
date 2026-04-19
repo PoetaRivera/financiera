@@ -88,25 +88,46 @@ Aplicación React (Vite) de calculadora financiera. Rama actual: `claude/spanish
 
 ---
 
+## Lo que está TERMINADO — actualización 2026-04-18 (sesión 4)
+
+### UX Nivel 1 — COMPLETADO
+- Mensajes de error nombran el campo específico que falla (los 3 módulos)
+- Resultados de tasa muestran decimal + porcentaje: `0.125000  (12.5000%)`
+  → Tasas: todos los casos; Descuento: casos 10-12 (d); Interés: casos de i
+- Bloque Ayuda en Tasas: nota que explica generalización de `n` vs `m`
+
+### Fix bugs de Ayuda — COMPLETADO
+- Texto invisible: `color: var(--A100)` = `#CCFF90` coincidía con el fondo → cambiado a `#213547` modo claro
+- Texto todo pegado: `<span>` inline → `.indicaciones` y `.definiciones` con `display:flex; flex-direction:column`
+
+### UX Nivel 2 — COMPLETADO
+- Al seleccionar incógnita, su checkbox en datos queda deshabilitado y atenuado (`opacity: 0.4`)
+- **Eliminado botón "Introducir datos"** en Interés, Anualidades y Descuento
+- Los campos de entrada aparecen automáticamente al detectar combinación válida (`useEffect`)
+- Al cambiar la selección los valores se limpian automáticamente
+
+---
+
 ## Lo que está PENDIENTE (por hacer)
 
-### Discusión UX (pendiente con el usuario)
-- El usuario quiere discutir UX antes de implementar cambios
-- Punto concreto anotado: explicar la generalización del parámetro `n` en Tasas casos 1 y 2 dentro del bloque de Ayuda (en vez de cambiar la fórmula)
-- Temas a discutir: flujo de pasos, mensajes al usuario, otros aspectos de UX
+### Inmediato (próxima sesión)
+- **`TasasPagina`** aún tiene botón "Introducir datos" — eliminarlo para consistencia con el resto
+- **`Limpiar`** resetea todo (caso + incógnita + datos + valores) — discutir si debería solo limpiar valores o resetear todo
+- **UX Nivel 3** (visual/diseño) — pendiente de discusión con el usuario
 
-### Vercel MCP (próxima sesión)
-- Verificar deployment actual de FINANCIERA desde el MCP
-- Explorar tools disponibles: deployments, logs, variables de entorno
+### Vercel MCP
+- Los tools de Vercel estarán disponibles desde la próxima sesión
+- Recordar al usuario **regenerar el token** que compartió en el chat
 
 ---
 
 ## Por dónde continuar (próxima sesión)
 
-1. **Usar tools de Vercel MCP** — verificar estado del deployment `f8db55c` (el último refactor)
-2. **Discutir UX** con el usuario y luego implementar los cambios acordados
-3. El usuario quiere **regenerar el token de Vercel** (lo compartió en el chat) — recordárselo
+1. Eliminar botón "Introducir datos" de `TasasPagina`
+2. Decidir comportamiento de `Limpiar` e implementar
+3. Usar tools de Vercel MCP para verificar deployment
+4. Discutir UX Nivel 3 (visual)
 
 ---
 
-*Actualizado: 2026-04-18 — Arquitectura corregida, 267 tests, Vercel MCP configurado, UX pendiente de discusión*
+*Actualizado: 2026-04-18 — UX niveles 1 y 2 completados, 267 tests, pendiente Tasas + Limpiar + visual*
