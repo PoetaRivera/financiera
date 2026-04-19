@@ -110,6 +110,8 @@ export default function Descuento() {
     setMostrar(resetMostrar);
     setTexto(resetTexto);
 
+    if (!D && !Vf && !Va && !d && !n) return;
+
     if (verificaSeleccionDescuento(incognita, D, Vf, Va, d, n) === 0) {
       const numCaso = determinaCasoDescuento(incognita, D, Vf, Va, d, n);
       if (numCaso !== undefined) {
