@@ -83,6 +83,13 @@
 }
 
 /* Responsive para móviles */
+.indicaciones,
+.definiciones {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
 @media (max-width: 768px) {
     .definicion {
         flex-direction: column;
