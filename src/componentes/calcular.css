@@ -1,7 +1,19 @@
 .calcular {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 30px;
-    font-size:large;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 20px;
+  font-size: large;
+  flex-wrap: wrap;
+  padding: var(--spacing-sm) 0;
+}
+
+.calcular button:first-child {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.calcular button:first-child:hover {
+  background-color: var(--primary);
+  color: var(--bg-surface);
 }

@@ -1,7 +1,3 @@
-::placeholder {
-  color: var(--A200);
-  /* Cambia el color a tu preferencia */
-}
 .resultados {
   display: flex;
   flex-direction: column;
@@ -9,8 +5,22 @@
   margin-bottom: 10px;
 }
 
+.resultados article {
+  animation: slideDown var(--transition-base) ease-out;
+}
+
 .resultados-input {
   font-size: large;
   height: 40px;
   font-style: italic;
+}
+
+.resultados-input[readonly] {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 3px rgba(118, 255, 3, 0.2), var(--shadow-md) !important;
+  color: var(--primary);
+  font-weight: 600;
+  font-style: normal;
+  background: var(--bg-elevated);
+  animation: fadeInUp var(--transition-base) ease-out;
 }

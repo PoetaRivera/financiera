@@ -108,26 +108,32 @@ Aplicación React (Vite) de calculadora financiera. Rama actual: `claude/spanish
 
 ---
 
+## Lo que está TERMINADO — actualización 2026-04-19
+
+### Documentación — COMPLETADA
+- **`CLAUDE.md`** — documentación técnica del proyecto para futuras sesiones de Claude: rutas, arquitectura, componentes, convenciones, variables financieras, estado de tests, deployment
+- **`GUIA-USUARIO.md`** — guía completa para el usuario final (archivo Markdown en repo)
+- **Página `/Acerca`** — guía de usuario + sección "Acerca de" integradas en la app
+  - `AcercaPagina.jsx` + `acerca.css` — página completa con tabla de variables, instrucciones por módulo, autor, tecnologías
+  - `App.jsx` — ruta `/Acerca` agregada
+  - `BarraNavegacion.jsx` — link "Acerca" agregado a la navbar
+
+### Vercel MCP — VERIFICADO
+- Conexión activa confirmada: team `nelson-riveras-projects`, proyecto `financiera` visible
+
+---
+
 ## Lo que está PENDIENTE (por hacer)
 
-### Inmediato (próxima sesión)
-- **`TasasPagina`** aún tiene botón "Introducir datos" — eliminarlo para consistencia con el resto
-- **`Limpiar`** resetea todo (caso + incógnita + datos + valores) — discutir si debería solo limpiar valores o resetear todo
 - **UX Nivel 3** (visual/diseño) — pendiente de discusión con el usuario
-
-### Vercel MCP
-- Los tools de Vercel estarán disponibles desde la próxima sesión
-- Recordar al usuario **regenerar el token** que compartió en el chat
 
 ---
 
 ## Por dónde continuar (próxima sesión)
 
-1. Eliminar botón "Introducir datos" de `TasasPagina`
-2. Decidir comportamiento de `Limpiar` e implementar
-3. Usar tools de Vercel MCP para verificar deployment
-4. Discutir UX Nivel 3 (visual)
+1. Discutir y definir UX Nivel 3 (visual)
+2. Desplegar a Vercel cuando haya cambios listos (usar MCP Vercel)
 
 ---
 
-*Actualizado: 2026-04-18 — UX niveles 1 y 2 completados, 267 tests, pendiente Tasas + Limpiar + visual*
+*Actualizado: 2026-04-19 — Página /Acerca creada (guía usuario + about). Deploy a producción: https://financiera-ten.vercel.app. Pendiente: UX Nivel 3*
