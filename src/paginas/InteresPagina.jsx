@@ -462,6 +462,7 @@ export default function Interes({ tipo }) {
         ]}
         datos={datos}
         setDatos={setDatos}
+        incognitaKey={incognita === "R" ? "I" : incognita}
       />
 
       <Seleccion

@@ -216,6 +216,7 @@ export default function Descuento() {
         valores={INCOGNITAS.map((v) => ({ label: v, key: v }))}
         datos={datos}
         setDatos={setDatos}
+        incognitaKey={incognita}
       />
 
       <Seleccion obtenerCaso={obtenerCaso} deshabilitado={deshabilitado} />
