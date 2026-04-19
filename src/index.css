@@ -70,6 +70,21 @@
     color: var(--text-primary);
     background-color: var(--bg-base);
   }
+
+  :root:not([data-theme="dark"]) button {
+    background-color: var(--A700);
+    color: white;
+  }
+
+  :root:not([data-theme="dark"]) button:hover {
+    border-color: black;
+    color: black;
+    background-color: var(--A200);
+  }
+
+  :root:not([data-theme="dark"]) a:hover {
+    color: black;
+  }
 }
 
 /* ── Modo oscuro manual ───────────────────────────────────── */
@@ -96,6 +111,17 @@
   --border-color:   rgba(100, 221, 23, 0.35);
   color: var(--text-primary);
   background-color: var(--bg-base);
+}
+
+[data-theme="light"] button {
+  background-color: var(--A700);
+  color: white;
+}
+
+[data-theme="light"] button:hover {
+  border-color: black;
+  color: black;
+  background-color: var(--A200);
 }
 
 /* ============================================================
