@@ -216,3 +216,41 @@ describe('Validación de casos especiales', () => {
     expect(resultado).toBe(esperado.toFixed(6));
   });
 });
+
+describe('Guardas de dominio — logaritmos', () => {
+  describe('caso 29 (tipo=0): n = log(Vf/(Vf-I)) / log(1+i)', () => {
+    it('Vf = I → null (log de cero)', () => {
+      expect(operaciones(29, 1000, 1000, 0, 0.05, 0, 0)).toBeNull();
+    });
+    it('Vf < I → null (log de negativo)', () => {
+      expect(operaciones(29, 1200, 1000, 0, 0.05, 0, 0)).toBeNull();
+    });
+    it('Vf > I → valor válido', () => {
+      expect(operaciones(29, 100, 1000, 0, 0.05, 0, 0)).not.toBeNull();
+    });
+  });
+
+  describe('caso 15 (tipo=1, anticipada): n con condición R > Va*i', () => {
+    it('R = Va*i → null', () => {
+      // R=10, Va=100, i=0.1 → R = Va*i
+      expect(operaciones(15, 10, 0, 100, 0.1, 0, 1)).toBeNull();
+    });
+    it('R < Va*i → null', () => {
+      expect(operaciones(15, 5, 0, 100, 0.1, 0, 1)).toBeNull();
+    });
+    it('R > Va*i → valor válido', () => {
+      expect(operaciones(15, 20, 0, 100, 0.1, 0, 1)).not.toBeNull();
+    });
+  });
+
+  describe('caso 30 (tipo=1, anticipada): n con condición R*(1+i) > Va*i', () => {
+    it('condición violada → null', () => {
+      // Va*i = 100*0.9 = 90, R*(1+i) = 50*1.9 = 95 > 90 → válido
+      // Para violar: Va=1000, i=0.9, R=1, R*(1+i)=1.9, Va*i=900 → 1.9 < 900
+      expect(operaciones(30, 1, 0, 1000, 0.9, 0, 1)).toBeNull();
+    });
+    it('condición satisfecha → valor válido', () => {
+      expect(operaciones(30, 200, 0, 100, 0.1, 0, 1)).not.toBeNull();
+    });
+  });
+});

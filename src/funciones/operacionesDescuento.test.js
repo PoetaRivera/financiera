@@ -76,6 +76,27 @@ describe('operacionesDescuento — 15 casos', () => {
       expect(operacionesDescuento(3, 0, 500, 0, 0.05, 2)).toBe('50.000000');
     });
   });
+
+  describe('Guardas de dominio — nunca retorna Infinity ni NaN', () => {
+    it('caso 2: d*n = 1 → null (denominador cero)', () => {
+      expect(operacionesDescuento(2, 0, 0, 900, 0.5, 2)).toBeNull();
+    });
+    it('caso 2: d*n > 1 → null (denominador negativo)', () => {
+      expect(operacionesDescuento(2, 0, 0, 900, 0.8, 2)).toBeNull();
+    });
+    it('caso 2: d*n < 1 → valor válido (no null)', () => {
+      expect(operacionesDescuento(2, 0, 0, 900, 0.1, 1)).not.toBeNull();
+    });
+    it('caso 6: d*n = 1 → null', () => {
+      expect(operacionesDescuento(6, 0, 0, 900, 1, 1)).toBeNull();
+    });
+    it('caso 6: d*n > 1 → null', () => {
+      expect(operacionesDescuento(6, 0, 0, 900, 0.6, 2)).toBeNull();
+    });
+    it('caso 6: d*n < 1 → valor válido', () => {
+      expect(operacionesDescuento(6, 0, 0, 900, 0.1, 1)).not.toBeNull();
+    });
+  });
 });
 
 describe('determinaCasoDescuento — selección correcta de casos', () => {

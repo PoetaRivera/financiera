@@ -76,4 +76,16 @@ describe('operacionesTasas — 4 conversiones de tasas', () => {
       expect(operacionesTasas(0, 0.1, 12, 1)).toBeNull();
     });
   });
+
+  describe('Guardas de dominio — caso 4 ir = d/(1-n*d)', () => {
+    it('n*d = 1 → null (denominador cero)', () => {
+      expect(operacionesTasas(4, 0.5, 2, 0)).toBeNull();
+    });
+    it('n*d > 1 → null (denominador negativo)', () => {
+      expect(operacionesTasas(4, 0.5, 3, 0)).toBeNull();
+    });
+    it('n*d < 1 → valor válido', () => {
+      expect(operacionesTasas(4, 0.05, 10, 0)).not.toBeNull();
+    });
+  });
 });

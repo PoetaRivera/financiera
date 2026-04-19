@@ -179,6 +179,7 @@ export function operaciones(caso, iI, vf, va, ii, nn, tipo) {
         nn = parseFloat(nn).toFixed(numDeci);
         return nn;
       case 29:
+        if (vf <= iI) return null;
         x = vf - iI;
         y = vf / x;
         nn = log(y) / log(1 + ii);
@@ -257,6 +258,7 @@ export function operaciones(caso, iI, vf, va, ii, nn, tipo) {
         return nn;
 
       case 15:
+        if (iI <= va * ii) return null;
         x = (va * ii) / iI;
         y = 1 - x;
         z = 1 + ii;
@@ -310,6 +312,7 @@ export function operaciones(caso, iI, vf, va, ii, nn, tipo) {
         nn = parseFloat(nn).toFixed(numDeci);
         return nn;
       case 30:
+        if (va * ii >= iI * (1 + ii)) return null;
         x = 1 + ii;
         y = (va * ii) / iI;
         z = 1 / x;

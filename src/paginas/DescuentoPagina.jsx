@@ -1,6 +1,8 @@
 import { useState } from "react";
 import "./interes.css";
 import milogo from "../imagenes/financiera1024.png";
+import Incognita from "../componentes/Incognita";
+import Datos from "../componentes/Datos";
 import Seleccion from "../componentes/Seleccion";
 import Resultados from "../componentes/Resultados";
 import Calcular from "../componentes/Calcular";
@@ -11,15 +13,57 @@ import { determinaCasoDescuento } from "../funciones/determinaCasoDescuento";
 import { ejecutaCasoDescuento } from "../funciones/ejecutaCasoDescuento";
 import { operacionesDescuento } from "../funciones/operacionesDescuento";
 
-// Etiqueta del resultado según el caso
+const INCOGNITAS = ["D", "Vf", "Va", "d", "n"];
+
 const RESULTADO_LABEL = ["D = ", "Vf = ", "Va = ", "d = ", "n = "];
 function labelResultado(caso) {
-  if (caso <= 3) return RESULTADO_LABEL[0];
-  if (caso <= 6) return RESULTADO_LABEL[1];
-  if (caso <= 9) return RESULTADO_LABEL[2];
+  if (caso <= 3)  return RESULTADO_LABEL[0];
+  if (caso <= 6)  return RESULTADO_LABEL[1];
+  if (caso <= 9)  return RESULTADO_LABEL[2];
   if (caso <= 12) return RESULTADO_LABEL[3];
   return RESULTADO_LABEL[4];
 }
+
+// Mapa declarativo: caso → { d1: setter, d2: setter, d3?: setter }
+// Se construye dentro del componente para acceder a los setters de estado
+function buildCamposPorCaso(setVf, setVa, setDD, setDd, setNn) {
+  return {
+    1:  { d1: setVf, d2: setVa },
+    2:  { d1: setVa, d2: setDd, d3: setNn },
+    3:  { d1: setVf, d2: setDd, d3: setNn },
+    4:  { d1: setVa, d2: setDD },
+    5:  { d1: setDD, d2: setDd, d3: setNn },
+    6:  { d1: setVa, d2: setDd, d3: setNn },
+    7:  { d1: setVf, d2: setDD },
+    8:  { d1: setDD, d2: setDd, d3: setNn },
+    9:  { d1: setVf, d2: setDd, d3: setNn },
+    10: { d1: setVf, d2: setVa, d3: setNn },
+    11: { d1: setVf, d2: setDD, d3: setNn },
+    12: { d1: setVa, d2: setDD, d3: setNn },
+    13: { d1: setVf, d2: setVa, d3: setDd },
+    14: { d1: setVf, d2: setDD, d3: setDd },
+    15: { d1: setDD, d2: setVa, d3: setDd },
+  };
+}
+
+// Qué valores usar para calcular cada caso
+const GRUPOS_VALIDACION = {
+  1:  (s) => [s.vf, s.va],
+  2:  (s) => [s.va, s.dd, s.nn],
+  3:  (s) => [s.vf, s.dd, s.nn],
+  4:  (s) => [s.va, s.dD],
+  5:  (s) => [s.dD, s.dd, s.nn],
+  6:  (s) => [s.va, s.dd, s.nn],
+  7:  (s) => [s.vf, s.dD],
+  8:  (s) => [s.dD, s.dd, s.nn],
+  9:  (s) => [s.vf, s.dd, s.nn],
+  10: (s) => [s.vf, s.va, s.nn],
+  11: (s) => [s.vf, s.dD, s.nn],
+  12: (s) => [s.va, s.dD, s.nn],
+  13: (s) => [s.vf, s.va, s.dd],
+  14: (s) => [s.vf, s.dD, s.dd],
+  15: (s) => [s.dD, s.va, s.dd],
+};
 
 export default function Descuento() {
   const [muestraAyuda, setMuestraAyuda] = useState(false);
@@ -39,9 +83,7 @@ export default function Descuento() {
 
   const { D, Vf, Va, d, n } = datos;
 
-  function manejaDatos(e) {
-    setDatos({ ...datos, [e.target.value]: e.target.checked });
-  }
+  const camposPorCaso = buildCamposPorCaso(setVf, setVa, setDD, setDd, setNn);
 
   function obtenerCaso() {
     if (verificaSeleccionDescuento(incognita, D, Vf, Va, d, n) === 0) {
@@ -55,92 +97,12 @@ export default function Descuento() {
   }
 
   function manejarEntrada(e) {
-    const { name, value } = e.target;
-    switch (caso) {
-      case 1:
-        if (name === "d1") setVf(value);
-        if (name === "d2") setVa(value);
-        break;
-      case 2:
-      case 6:
-        if (name === "d1") setVa(value);
-        if (name === "d2") setDd(value);
-        if (name === "d3") setNn(value);
-        break;
-      case 3:
-      case 9:
-        if (name === "d1") setVf(value);
-        if (name === "d2") setDd(value);
-        if (name === "d3") setNn(value);
-        break;
-      case 4:
-        if (name === "d1") setVa(value);
-        if (name === "d2") setDD(value);
-        break;
-      case 5:
-      case 8:
-        if (name === "d1") setDD(value);
-        if (name === "d2") setDd(value);
-        if (name === "d3") setNn(value);
-        break;
-      case 7:
-        if (name === "d1") setVf(value);
-        if (name === "d2") setDD(value);
-        break;
-      case 10:
-        if (name === "d1") setVf(value);
-        if (name === "d2") setVa(value);
-        if (name === "d3") setNn(value);
-        break;
-      case 11:
-        if (name === "d1") setVf(value);
-        if (name === "d2") setDD(value);
-        if (name === "d3") setNn(value);
-        break;
-      case 12:
-        if (name === "d1") setVa(value);
-        if (name === "d2") setDD(value);
-        if (name === "d3") setNn(value);
-        break;
-      case 13:
-        if (name === "d1") setVf(value);
-        if (name === "d2") setVa(value);
-        if (name === "d3") setDd(value);
-        break;
-      case 14:
-        if (name === "d1") setVf(value);
-        if (name === "d2") setDD(value);
-        if (name === "d3") setDd(value);
-        break;
-      case 15:
-        if (name === "d1") setDD(value);
-        if (name === "d2") setVa(value);
-        if (name === "d3") setDd(value);
-        break;
-      default:
-        break;
-    }
+    const setter = camposPorCaso[caso]?.[e.target.name];
+    if (setter) setter(e.target.value);
   }
 
   function verificaEntradas() {
-    const grupos = {
-      1:  [vf, va],
-      2:  [va, dd, nn],
-      3:  [vf, dd, nn],
-      4:  [va, dD],
-      5:  [dD, dd, nn],
-      6:  [va, dd, nn],
-      7:  [vf, dD],
-      8:  [dD, dd, nn],
-      9:  [vf, dd, nn],
-      10: [vf, va, nn],
-      11: [vf, dD, nn],
-      12: [va, dD, nn],
-      13: [vf, va, dd],
-      14: [vf, dD, dd],
-      15: [dD, va, dd],
-    };
-    const vals = grupos[caso];
+    const vals = GRUPOS_VALIDACION[caso]?.({ dD, vf, va, dd, nn });
     if (!vals) return;
 
     for (const v of vals) {
@@ -158,11 +120,16 @@ export default function Descuento() {
       }
     }
 
+    const res = operacionesDescuento(caso, dD, vf, va, dd, nn);
+    if (res === null) {
+      alertaMensaje("d × n debe ser menor que 1 para este cálculo");
+      return;
+    }
     texto[3] = labelResultado(caso);
     setTexto([...texto]);
     mostrar[3] = true;
     setMostrar([...mostrar]);
-    setResultado(operacionesDescuento(caso, dD, vf, va, dd, nn));
+    setResultado(res);
   }
 
   function limpiar() {
@@ -175,8 +142,6 @@ export default function Descuento() {
     setDeshabilitado(false);
     setDD(0); setVf(0); setVa(0); setDd(0); setNn(0);
   }
-
-  const incognitas = ["D", "Vf", "Va", "d", "n"];
 
   return (
     <main className="principal">
@@ -213,54 +178,20 @@ export default function Descuento() {
         </div>
       )}
 
-      {/* Incógnita */}
-      <section className="incognita" aria-labelledby="incognita-desc-titulo">
-        <h3 id="incognita-desc-titulo" className="incognita-subtitulo">
-          1. Seleccione la incógnita
-        </h3>
-        <aside className="incognita-input" role="radiogroup">
-          {incognitas.map((val, idx) => (
-            <article key={val}>
-              <input
-                id={`desc-inc-${idx}`}
-                disabled={deshabilitado}
-                type="radio"
-                name="incognita-desc"
-                value={val}
-                checked={incognita === val}
-                onChange={(e) => setIncognita(e.target.value)}
-                aria-label={`Seleccionar ${val} como incógnita`}
-              />
-              <label htmlFor={`desc-inc-${idx}`}>{val}</label>
-            </article>
-          ))}
-        </aside>
-      </section>
+      <Incognita
+        deshabilitado={deshabilitado}
+        valores={INCOGNITAS}
+        incognita={incognita}
+        setIncognita={setIncognita}
+        nameGroup="incognita-desc"
+      />
 
-      {/* Datos conocidos */}
-      <section className="datos" aria-labelledby="datos-desc-titulo">
-        <h3 id="datos-desc-titulo" className="datos-subtitulo">
-          2. Seleccione datos conocidos
-        </h3>
-        <aside className="datos-input" role="group">
-          {incognitas.map((val, idx) => (
-            <article key={val}>
-              <label htmlFor={`desc-dato-${idx}`}>
-                <input
-                  id={`desc-dato-${idx}`}
-                  disabled={deshabilitado}
-                  type="checkbox"
-                  value={val}
-                  checked={!!datos[val]}
-                  onChange={manejaDatos}
-                  aria-label={`Seleccionar ${val} como dato conocido`}
-                />
-                {val}
-              </label>
-            </article>
-          ))}
-        </aside>
-      </section>
+      <Datos
+        deshabilitado={deshabilitado}
+        valores={INCOGNITAS.map((v) => ({ label: v, key: v }))}
+        datos={datos}
+        setDatos={setDatos}
+      />
 
       <Seleccion obtenerCaso={obtenerCaso} deshabilitado={deshabilitado} />
 

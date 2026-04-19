@@ -358,13 +358,18 @@ export default function Interes({ tipo }) {
         numMesaje = 4;
         break;
     }
+    const res = operaciones(caso, iI, vf, va, ii, nn, tipo);
+    if (res === null) {
+      alertaMensaje("Los valores ingresados no tienen solución matemática válida");
+      return;
+    }
     texto[3] = mensajesR[numMesaje];
     const textoNuevo = [...texto];
     setTexto(textoNuevo);
     mostrar[3] = true;
     const mostrarNuevo = [...mostrar];
     setMostrar(mostrarNuevo);
-    setResultado(operaciones(caso, iI, vf, va, ii, nn, tipo));
+    setResultado(res);
   }
 
   function limpiar() {
@@ -433,28 +438,25 @@ export default function Interes({ tipo }) {
       ></Opcion>
 
       <Incognita
-        className="incognita"
         deshabilitado={deshabilitado}
-        valor1={valorx}
-        valor2="Vf"
-        valor3="Va"
-        valor4="i"
-        valor5="n"
+        valores={[valorx, "Vf", "Va", "i", "n"]}
         incognita={incognita}
         setIncognita={setIncognita}
-      ></Incognita>
+        nameGroup={`interes-${tipo}`}
+      />
 
       <Datos
-        className="datos"
         deshabilitado={deshabilitado}
-        valor1={valorx}
-        valor2="Vf"
-        valor3="Va"
-        valor4="i"
-        valor5="n"
+        valores={[
+          { label: valorx, key: "I" },
+          { label: "Vf",   key: "Vf" },
+          { label: "Va",   key: "Va" },
+          { label: "i",    key: "i" },
+          { label: "n",    key: "n" },
+        ]}
         datos={datos}
         setDatos={setDatos}
-      ></Datos>
+      />
 
       <Seleccion
         className="seleccion"

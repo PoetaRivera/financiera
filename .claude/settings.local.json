@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git *)",
+      "Bash(xargs ls *)",
+      "Bash(npm run *)",
+      "Bash(npm test *)",
+      "WebSearch",
+      "WebFetch(domain:www.usergioarboleda.edu.co)",
+      "WebFetch(domain:cursos.aiu.edu)",
+      "WebFetch(domain:oacampusvirtual.uadec.mx)",
+      "WebFetch(domain:www.gestiopolis.com)",
+      "WebFetch(domain:blogs.ugto.mx)",
+      "WebFetch(domain:www.plangeneralcontable.com)",
+      "WebFetch(domain:gc.scalahed.com)",
+      "WebFetch(domain:macareo.pucp.edu.pe)",
+      "WebFetch(domain:matefinanciera.com)",
+      "WebFetch(domain:www.amvcolombia.org.co)",
+      "WebFetch(domain:www.disfrutalasmatematicas.com)",
+      "WebFetch(domain:blog.nekomath.com)",
+      "WebFetch(domain:www.centro-virtual.com)",
+      "WebFetch(domain:www.eaeprogramas.es)",
+      "WebFetch(domain:belver.clavijero.edu.mx)",
+      "Bash(npx vitest *)",
+      "Bash(npx vite *)"
+    ]
+  }
+}

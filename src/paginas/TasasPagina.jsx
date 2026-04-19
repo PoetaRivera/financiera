@@ -58,6 +58,10 @@ export default function Tasas() {
     }
 
     const res = calcularTasas(tipoCalc, e1, e2, e3);
+    if (res === null) {
+      alertaMensaje("n × d debe ser menor que 1 para calcular ir");
+      return;
+    }
     setResultado(`${cfg.resultado} ${res}`);
   }
 
