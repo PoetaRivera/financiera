@@ -389,6 +389,13 @@ export default function Interes({ tipo }) {
   }
 
   function limpiar() {
+    setMostrar(Array(4).fill(false));
+    setTexto(Array(4).fill(false));
+    setResultado("");
+    setII(0); setVf(0); setVa(0); setIi(0); setNn(0);
+  }
+
+  function reiniciar() {
     setCaso(0);
     setOpcion(etiquetaOpcion1);
     setIncognita(etiquetaInicial);
@@ -474,10 +481,10 @@ export default function Interes({ tipo }) {
       ></Resultados>
 
       <Calcular
-        className="calcular"
         verificaEntradas={verificaEntradas}
         limpiar={limpiar}
-      ></Calcular>
+        reiniciar={reiniciar}
+      />
     </main>
   );
 }

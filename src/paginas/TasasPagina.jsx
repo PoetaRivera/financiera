@@ -64,6 +64,11 @@ export default function Tasas() {
   }
 
   function limpiar() {
+    setE1(""); setE2(""); setE3("");
+    setResultado(null);
+  }
+
+  function reiniciar() {
     setTipoCalc(1);
     setE1(""); setE2(""); setE3("");
     setResultado(null);
@@ -174,7 +179,7 @@ export default function Tasas() {
         )}
       </section>
 
-      <Calcular verificaEntradas={calcular} limpiar={limpiar} />
+      <Calcular verificaEntradas={calcular} limpiar={limpiar} reiniciar={reiniciar} />
     </main>
   );
 }

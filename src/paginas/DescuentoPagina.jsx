@@ -163,6 +163,13 @@ export default function Descuento() {
   }
 
   function limpiar() {
+    setMostrar(Array(4).fill(false));
+    setTexto(Array(4).fill(false));
+    setResultado("");
+    setDD(0); setVf(0); setVa(0); setDd(0); setNn(0);
+  }
+
+  function reiniciar() {
     setCaso(0);
     setIncognita("D");
     setDatos({ D: false, Vf: false, Va: false, d: false, n: false });
@@ -233,7 +240,7 @@ export default function Descuento() {
         resultado={resultado}
       />
 
-      <Calcular verificaEntradas={verificaEntradas} limpiar={limpiar} />
+      <Calcular verificaEntradas={verificaEntradas} limpiar={limpiar} reiniciar={reiniciar} />
     </main>
   );
 }
