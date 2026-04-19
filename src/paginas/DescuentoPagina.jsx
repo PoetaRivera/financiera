@@ -1,9 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./interes.css";
 import milogo from "../imagenes/financiera1024.png";
 import Incognita from "../componentes/Incognita";
 import Datos from "../componentes/Datos";
-import Seleccion from "../componentes/Seleccion";
 import Resultados from "../componentes/Resultados";
 import Calcular from "../componentes/Calcular";
 import { alertaMensaje } from "../funciones/alertaMensaje";
@@ -103,16 +102,22 @@ export default function Descuento() {
 
   const camposPorCaso = buildCamposPorCaso(setVf, setVa, setDD, setDd, setNn);
 
-  function obtenerCaso() {
+  useEffect(() => {
+    setDD(0); setVf(0); setVa(0); setDd(0); setNn(0);
+    setResultado("");
+    const resetMostrar = Array(4).fill(false);
+    const resetTexto   = Array(4).fill(false);
+    setMostrar(resetMostrar);
+    setTexto(resetTexto);
+
     if (verificaSeleccionDescuento(incognita, D, Vf, Va, d, n) === 0) {
       const numCaso = determinaCasoDescuento(incognita, D, Vf, Va, d, n);
-      if (numCaso === undefined) {
-        alertaMensaje("Selección no válida");
-        return;
+      if (numCaso !== undefined) {
+        ejecutaCasoDescuento(numCaso, resetTexto, setTexto, resetMostrar, setMostrar, setCaso, null);
       }
-      ejecutaCasoDescuento(numCaso, texto, setTexto, mostrar, setMostrar, setCaso, setDeshabilitado);
     }
-  }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [incognita, D, Vf, Va, d, n]);
 
   function manejarEntrada(e) {
     const setter = camposPorCaso[caso]?.[e.target.name];
@@ -218,8 +223,6 @@ export default function Descuento() {
         setDatos={setDatos}
         incognitaKey={incognita}
       />
-
-      <Seleccion obtenerCaso={obtenerCaso} deshabilitado={deshabilitado} />
 
       {!mostrar[0] && <img className="logo" alt="Logo Financiera" src={milogo} />}
 

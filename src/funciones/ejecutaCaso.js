@@ -113,5 +113,5 @@ export function ejecutaCaso(
   const mostrarNuevo = [...mostrar];
   setMostrar(mostrarNuevo);
   setCaso(numCaso);
-  setDeshabilitado(true);
+  if (setDeshabilitado) setDeshabilitado(true);
 }

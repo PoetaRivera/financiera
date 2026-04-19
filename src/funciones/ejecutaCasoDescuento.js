@@ -48,5 +48,5 @@ export function ejecutaCasoDescuento(
   mostrar[1] = true;
   setMostrar([...mostrar]);
   setCaso(numCaso);
-  setDeshabilitado(true);
+  if (setDeshabilitado) setDeshabilitado(true);
 }

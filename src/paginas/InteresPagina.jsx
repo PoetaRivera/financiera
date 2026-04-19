@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 //css
 import "./interes.css";
 import milogo from '../imagenes/financiera1024.png'
@@ -11,7 +11,6 @@ import Incognita from "../componentes/Incognita.jsx";
 import Datos from "../componentes/Datos.jsx";
 import Calcular from "../componentes/Calcular.jsx";
 import Resultados from "../componentes/Resultados.jsx";
-import Seleccion from "../componentes/Seleccion.jsx";
 //funciones
 import { verificaSeleccion } from "../funciones/verificaSeleccion.js";
 import { determinaCaso } from "../funciones/determinaCaso.js";
@@ -100,23 +99,34 @@ export default function Interes({ tipo }) {
 
   //------------------------------------------------------------------------------------
 
-  function obtenerCaso() {
+  // Auto-detecta caso válido al cambiar incognita, opcion o datos
+  useEffect(() => {
+    // Limpiar inputs y resultado al cambiar selección
+    setII(0); setVf(0); setVa(0); setIi(0); setNn(0);
+    setResultado("");
+    const resetMostrar = Array(4).fill(false);
+    const resetTexto   = Array(4).fill(false);
+    setMostrar(resetMostrar);
+    setTexto(resetTexto);
+
     if (verificaSeleccion(incognita, I, Vf, Va, i, n, tipo) === 0) {
       numCaso = determinaCaso(incognita, opcion, I, Vf, Va, i, n, tipo);
-
-      ejecutaCaso(
-        numCaso,
-        texto,
-        setTexto,
-        mensajesI,
-        mostrar,
-        setMostrar,
-        setCaso,
-        setDeshabilitado,
-        tipo
-      );
+      if (numCaso) {
+        ejecutaCaso(
+          numCaso,
+          resetTexto,
+          setTexto,
+          mensajesI,
+          resetMostrar,
+          setMostrar,
+          setCaso,
+          null,   // no bloquear selección
+          tipo
+        );
+      }
     }
-  }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [incognita, opcion, I, Vf, Va, i, n]);
 
   function manejarEntrada(e) {
     switch (caso) {
@@ -382,24 +392,12 @@ export default function Interes({ tipo }) {
     setCaso(0);
     setOpcion(etiquetaOpcion1);
     setIncognita(etiquetaInicial);
-    setDatos({
-      ...datos,
-      I: false,
-      Vf: false,
-      Va: false,
-      i: false,
-      n: false,
-    });
-
+    setDatos({ I: false, Vf: false, Va: false, i: false, n: false });
     setMostrar(Array(4).fill(false));
     setTexto(Array(4).fill(false));
     setResultado("");
     setDeshabilitado(false);
-    setII(0);
-    setVf(0);
-    setVa(0);
-    setIi(0);
-    setNn(0);
+    setII(0); setVf(0); setVa(0); setIi(0); setNn(0);
   }
 
   function interesAnualidad() {
@@ -464,12 +462,6 @@ export default function Interes({ tipo }) {
         setDatos={setDatos}
         incognitaKey={incognita === "R" ? "I" : incognita}
       />
-
-      <Seleccion
-        className="seleccion"
-        obtenerCaso={obtenerCaso}
-        deshabilitado={deshabilitado}
-      ></Seleccion>
 
       {!mostrar[0] ? (<img className="logo" alt="Logo Financiera" src={milogo} />):null}
 
