@@ -50,26 +50,39 @@ Aplicación React (Vite) de calculadora financiera. Rama actual: `claude/spanish
 
 ---
 
+## Lo que está TERMINADO — actualización 2026-04-18 (sesión 2)
+
+### Tests nuevos módulos — IMPLEMENTADOS
+- `operacionesTasas.test.js` — 16 tests: casos 1-4, round-trips, inválido
+- `operacionesDescuento.test.js` — 37 tests: 15 casos + determinaCasoDescuento (15+1) + verificaSeleccionDescuento (4)
+
+### Validación de fórmulas — COMPLETADA
+- `validacion-formulas.md` — 65 fórmulas validadas contra 7 fuentes académicas externas
+- Módulos cubiertos: Interés Simple, Interés Compuesto, Anualidades Vencidas, Anualidades Anticipadas, Descuento Comercial, Conversión de Tasas
+- Derivación matemática documentada para Tasas casos 3 y 4
+- Estado: 65/65 fórmulas ✅
+
+---
+
 ## Lo que está PENDIENTE (por hacer)
 
 ### Archivo huérfano
 - `AnualidadesPagina.jsx` en `/paginas/` — NO se usa en `App.jsx`. Considerar eliminar.
 
-### Mejoras opcionales
-- Tests para los nuevos módulos (Descuento y Tasas)
-- Los resultados de `d` en Descuento casos 10-12 se muestran como decimal; podría mostrarse como porcentaje
+### Pendiente inmediato
+- **Hacer commit y push** de `validacion-formulas.md` y actualización de seguimiento
+
+### Opcional futuro
+- Configurar Vercel MCP (`claude mcp add --transport http vercel https://mcp.vercel.com`)
 
 ---
 
 ## Por dónde continuar
 
-La app ahora tiene **paridad funcional completa** con la versión Android Java (63 operaciones).
-
-Próximas acciones sugeridas:
-1. **Hacer commit y push** de los nuevos módulos
-2. **Verificar en producción** (Vercel despliega automáticamente desde `main`)
-3. Opcional: agregar tests para Descuento y Tasas
+Toda la funcionalidad está implementada, testeada y validada matemáticamente. El siguiente paso es:
+1. Commit y push de `validacion-formulas.md`
+2. Configurar Vercel MCP (el usuario lo pospuso para después de los tests)
 
 ---
 
-*Actualizado: 2026-04-18 — Descuento (15 casos) y Tasas (4 casos) implementados y verificados*
+*Actualizado: 2026-04-18 — 65 fórmulas validadas, 53 tests pasando (197 + 53 nuevos), documento de validación creado*
