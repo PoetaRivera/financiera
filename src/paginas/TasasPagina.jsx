@@ -1,12 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./interes.css";
-import milogo from "../imagenes/financiera1024.png";
 import Calcular from "../componentes/Calcular";
 import { alertaMensaje } from "../funciones/alertaMensaje";
 import { esNumeroValido } from "../funciones/validarInput";
 import { operacionesTasas as calcularTasas } from "../funciones/operacionesTasas";
 
-// Casos: 1=calcular i, 2=calcular j, 3=calcular d, 4=calcular ir
 const OPCIONES = [
   { value: 1, label: "i  (Tasa Efectiva)" },
   { value: 2, label: "j  (Tasa Nominal)" },
@@ -24,19 +22,16 @@ const CONFIG = {
 export default function Tasas() {
   const [muestraAyuda, setMuestraAyuda] = useState(false);
   const [tipoCalc, setTipoCalc] = useState(1);
-  const [deshabilitado, setDeshabilitado] = useState(false);
-  const [mostrarInputs, setMostrarInputs] = useState(false);
   const [e1, setE1] = useState("");
   const [e2, setE2] = useState("");
   const [e3, setE3] = useState("");
   const [resultado, setResultado] = useState(null);
 
-  function introducirDatos() {
-    setMostrarInputs(true);
-    setDeshabilitado(true);
-    setResultado(null);
+  // Al cambiar el tipo limpiar valores y resultado
+  useEffect(() => {
     setE1(""); setE2(""); setE3("");
-  }
+    setResultado(null);
+  }, [tipoCalc]);
 
   function calcular() {
     const cfg = CONFIG[tipoCalc];
@@ -70,8 +65,6 @@ export default function Tasas() {
 
   function limpiar() {
     setTipoCalc(1);
-    setDeshabilitado(false);
-    setMostrarInputs(false);
     setE1(""); setE2(""); setE3("");
     setResultado(null);
   }
@@ -96,10 +89,9 @@ export default function Tasas() {
           <section className="indicaciones">
             <span className="miTitulo">Indicaciones:</span>
             <span>1. Seleccione qué tasa desea calcular.</span>
-            <span>2. Dé clic en &quot;Introducir datos&quot;.</span>
-            <span>3. Introduzca los datos requeridos (en decimal, ej: 0.05 para 5%).</span>
-            <span>4. Dé clic en &quot;Calcular&quot;.</span>
-            <span>5. Dé clic en &quot;Limpiar&quot; para reiniciar.</span>
+            <span>2. Introduzca los datos requeridos (en decimal, ej: 0.05 para 5%).</span>
+            <span>3. Dé clic en &quot;Calcular&quot;.</span>
+            <span>4. Dé clic en &quot;Limpiar&quot; para reiniciar.</span>
           </section>
           <section className="definiciones">
             <span className="miTitulo">Definiciones:</span>
@@ -115,7 +107,6 @@ export default function Tasas() {
         </div>
       )}
 
-      {/* Selección del tipo de cálculo */}
       <section className="incognita" aria-labelledby="tasas-titulo">
         <h3 id="tasas-titulo" className="incognita-subtitulo">
           1. Seleccione qué calcular
@@ -125,7 +116,6 @@ export default function Tasas() {
             <article key={op.value}>
               <input
                 id={`tasas-opt-${op.value}`}
-                disabled={deshabilitado}
                 type="radio"
                 name="tasas-tipo"
                 value={op.value}
@@ -139,62 +129,50 @@ export default function Tasas() {
         </aside>
       </section>
 
-      {/* Botón Introducir datos */}
-      <section className="seleccion">
-        <button onClick={introducirDatos} disabled={deshabilitado}>
-          Introducir datos
-        </button>
+      <section className="resultados">
+        <article>
+          <input
+            className="resultados-input"
+            type="number"
+            step="0.0001"
+            placeholder={cfg.labels[0]}
+            value={e1}
+            onChange={(e) => setE1(e.target.value)}
+          />
+        </article>
+        <article>
+          <input
+            className="resultados-input"
+            type="number"
+            step="0.0001"
+            placeholder={cfg.labels[1]}
+            value={e2}
+            onChange={(e) => setE2(e.target.value)}
+          />
+        </article>
+        {cfg.campos === 3 && (
+          <article>
+            <input
+              className="resultados-input"
+              type="number"
+              step="0.0001"
+              placeholder={cfg.labels[2]}
+              value={e3}
+              onChange={(e) => setE3(e.target.value)}
+            />
+          </article>
+        )}
+        {resultado !== null && (
+          <article>
+            <input
+              className="resultados-input"
+              readOnly
+              type="text"
+              value={resultado}
+            />
+          </article>
+        )}
       </section>
-
-      {!mostrarInputs && <img className="logo" alt="Logo Financiera" src={milogo} />}
-
-      {/* Campos de entrada */}
-      {mostrarInputs && (
-        <section className="resultados">
-          <article>
-            <input
-              className="resultados-input"
-              type="number"
-              step="0.0001"
-              placeholder={cfg.labels[0]}
-              value={e1}
-              onChange={(e) => setE1(e.target.value)}
-            />
-          </article>
-          <article>
-            <input
-              className="resultados-input"
-              type="number"
-              step="0.0001"
-              placeholder={cfg.labels[1]}
-              value={e2}
-              onChange={(e) => setE2(e.target.value)}
-            />
-          </article>
-          {cfg.campos === 3 && (
-            <article>
-              <input
-                className="resultados-input"
-                type="number"
-                step="0.0001"
-                placeholder={cfg.labels[2]}
-                value={e3}
-                onChange={(e) => setE3(e.target.value)}
-              />
-            </article>
-          )}
-          {resultado !== null && (
-            <article>
-              <input
-                className="resultados-input"
-                readOnly
-                type="text"
-                value={resultado}
-              />
-            </article>
-          )}
-        </section>
-      )}
 
       <Calcular verificaEntradas={calcular} limpiar={limpiar} />
     </main>
