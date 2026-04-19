@@ -27,6 +27,7 @@ export default function BarraNavegacion() {
       <NavLink className="link" to="/Anualidades">Anualidad</NavLink>
       <NavLink className="link" to="/Tasas">Tasas</NavLink>
       <NavLink className="link" to="/Descuento">Descuento</NavLink>
+      <NavLink className="link" to="/Amortizacion">Amortización</NavLink>
       <NavLink className="link" to="/Acerca">Acerca</NavLink>
       <button className="link tema-toggle" onClick={toggleTheme} title="Cambiar tema">
         {theme === "dark" ? "Claro" : "Oscuro"}
