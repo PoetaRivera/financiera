@@ -109,6 +109,8 @@ export default function Interes({ tipo }) {
     setMostrar(resetMostrar);
     setTexto(resetTexto);
 
+    if (!I && !Vf && !Va && !i && !n) return;
+
     if (verificaSeleccion(incognita, I, Vf, Va, i, n, tipo) === 0) {
       numCaso = determinaCaso(incognita, opcion, I, Vf, Va, i, n, tipo);
       if (numCaso) {

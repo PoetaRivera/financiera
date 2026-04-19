@@ -8,12 +8,3 @@
   padding: var(--spacing-sm) 0;
 }
 
-.calcular button:first-child {
-  border-color: var(--primary);
-  color: var(--primary);
-}
-
-.calcular button:first-child:hover {
-  background-color: var(--primary);
-  color: var(--bg-surface);
-}
